@@ -1,0 +1,35 @@
+package tests.koza1994;
+
+import geneticAlgorithm.test.Test;
+import geneticAlgorithm.GADelegate;
+import geneticProgramming.*;
+import geneticAlgorithm.grammar.adf.ADF;
+import geneticAlgorithm.grammar.adf.ADFDelegate;
+public class Koza1994_4 extends Test{
+
+	@Override
+	public GADelegate configure() {
+		GPPopulationDelegate adf1PopulationDelegate = new ADF1PopulationDelegate();
+		adf1PopulationDelegate.initiate();
+		ADFDelegate adf1Delegate = new ADF1DelegateSimple();
+		adf1Delegate.setPopulationDelegate(adf1PopulationDelegate);
+
+		ADF adf1 = new ADF(0, adf1Delegate);
+		
+		
+		GPPopulationDelegate mainPopulationDelegate = new MainPopulationDelegate1_2_4();
+		mainPopulationDelegate.addADF(adf1);
+		GPDelegate gpDelegate = new Koza1994GPDelegate1_2_4();
+		ADF[] adfs = {adf1};
+		gpDelegate.setADFs(adfs);
+		mainPopulationDelegate.initiate();
+		gpDelegate.setMainPopulationDelegate(mainPopulationDelegate);
+		return gpDelegate;
+	}
+
+	@Override
+	public String getName() {
+		return "Koza 1994 (Simple)";
+	}
+
+}

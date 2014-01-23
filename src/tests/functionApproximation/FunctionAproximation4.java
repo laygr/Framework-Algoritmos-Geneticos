@@ -1,0 +1,37 @@
+package tests.functionApproximation;
+
+import geneticAlgorithm.test.Test;
+import geneticAlgorithm.*;
+import geneticProgramming.*;
+import geneticAlgorithm.grammar.adf.ADF;
+import geneticAlgorithm.grammar.adf.ADFDelegate;
+
+public class FunctionAproximation4 extends Test {
+	
+	@Override
+	public GADelegate configure() {
+		GPPopulationDelegate adf1PopulationDelegate = new ADF1PopulationDelegate();
+		adf1PopulationDelegate.initiate();
+		ADFDelegate adf1Delegate = new ADF1DelegateSimple();
+		adf1Delegate.setPopulationDelegate(adf1PopulationDelegate);
+
+		ADF adf1 = new ADF(0, adf1Delegate);
+
+		GPPopulationDelegate mainPopulationDelegate = new MainPopulationDelegate1_2_4();
+		GPDelegate gpDelegate = new FunctionAproximationGPDelegate1_2();
+		mainPopulationDelegate.addADF(adf1);
+		mainPopulationDelegate.initiate();
+		gpDelegate.setMainPopulationDelegate(mainPopulationDelegate);
+		ADF[]adfs = {adf1};
+		gpDelegate.setADFs(adfs);
+
+		return gpDelegate;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Function aproximation 1 (Simple)";
+	}
+
+}
